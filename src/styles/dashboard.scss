@@ -1,0 +1,256 @@
+/* dashboard.scss */
+@use "./variables" as *;
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__navbar {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+
+    @media (max-width: 768px) {
+      height: auto;
+      padding: 15px;
+    }
+
+    &-logo {
+      display: flex;
+      align-items: center;
+      margin-right: 100px;
+
+      @media (max-width: 768px) {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+
+      &-icon {
+        height: 30px;
+        width: 30px;
+        margin-right: 8px;
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: contain;
+        }
+      }
+
+      &-text {
+        color: $brand-blue;
+        font-weight: bold;
+        font-size: 1.5rem;
+        font-family: "Avenir Next", sans-serif;
+      }
+    }
+
+    &-search {
+      flex: 1;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        max-width: 100%;
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      input {
+        flex: 1;
+        height: 40px;
+        border: 1px solid rgba($brand-gray, 0.2);
+        border-right: none;
+        border-radius: 8px 0 0 8px;
+        padding: 0 15px;
+        font-family: "Avenir Next", sans-serif;
+
+        &:focus {
+          outline: none;
+          border-color: $brand-teal;
+        }
+      }
+
+      button {
+        height: 40px;
+        width: 56px;
+        background-color: $brand-teal;
+        border: none;
+        border-radius: 0 8px 8px 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+
+      @media (max-width: 768px) {
+        width: 100%;
+        justify-content: space-between;
+        gap: 15px;
+        margin-top: 10px;
+      }
+
+      &-link {
+        color: $brand-blue;
+        text-decoration: none;
+        font-family: "Avenir Next", sans-serif;
+        font-size: 16px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &-notification {
+        position: relative;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.1);
+          transition: transform 0.2s;
+        }
+      }
+
+      &-profile {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+
+        &-avatar {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        &-name {
+          color: $brand-blue;
+          font-family: "Avenir Next", sans-serif;
+          font-weight: 600;
+        }
+
+        &:hover {
+          opacity: 0.8;
+          transition: opacity 0.2s;
+        }
+      }
+    }
+  }
+
+  &__main {
+    display: flex;
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
+
+    @media (max-width: 768px) {
+      margin-top: 140px;
+      flex-direction: column;
+    }
+  }
+
+  &__sidebar {
+    width: 283px;
+    background-color: white;
+    padding-top: 40px;
+    height: calc(100vh - 80px); /* Fixed height calculation */
+    overflow-y: auto;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    bottom: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+    padding-bottom: 100px; /* Increased bottom padding for scrollability */
+
+    @media (max-width: 768px) {
+      width: 100%;
+      position: static;
+      height: auto;
+      max-height: 300px;
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 30px;
+      cursor: pointer;
+      color: $brand-blue;
+      font-family: "Avenir Next", sans-serif;
+
+      &:hover {
+        background-color: rgba($brand-blue, 0.06);
+      }
+
+      &.active {
+        background-color: rgba($brand-blue, 0.06);
+        border-left: 3px solid $brand-teal;
+      }
+
+      &-icon {
+        min-width: 16px;
+        height: 16px;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &-header {
+      padding: 16px 30px 8px;
+      color: $brand-gray;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-family: "Avenir Next", sans-serif;
+    }
+
+    &-select {
+      display: flex;
+      align-items: center;
+      padding: 12px 30px;
+      cursor: pointer;
+      margin-bottom: 20px;
+
+      svg {
+        margin-right: 10px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+    margin-left: 283px;
+    padding: 30px;
+    background-color: #fbfbfb;
+
+    @media (max-width: 768px) {
+      margin-left: 0;
+      padding: 20px;
+    }
+  }
+}
