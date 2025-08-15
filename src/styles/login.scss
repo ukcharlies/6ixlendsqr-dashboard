@@ -1,5 +1,6 @@
 /* login.scss */
 @use "./variables" as *;
+@use "sass:color";
 
 .login-page {
   min-height: 100vh;
@@ -199,7 +200,7 @@
         opacity 0.3s;
 
       &:hover {
-        background-color: darken($brand-teal, 10%);
+        background-color: color.adjust($brand-teal, $lightness: -10%);
         opacity: 0.9;
       }
     }

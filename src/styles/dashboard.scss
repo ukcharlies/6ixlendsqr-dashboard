@@ -1,10 +1,47 @@
 /* dashboard.scss */
 @use "./variables" as *;
+@use "sass:color";
 
 .dashboard {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  &__sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $brand-blue;
+    margin-right: 10px;
+    padding: 5px;
+
+    &:hover {
+      background-color: rgba($brand-blue, 0.06);
+      border-radius: 4px;
+    }
+  }
+
+  &.sidebar-closed {
+    .dashboard__sidebar {
+      left: -283px; /* Push sidebar off-screen instead of display: none */
+
+      @media (max-width: 768px) {
+        display: none; /* On mobile, we can fully hide it */
+      }
+    }
+
+    .dashboard__content {
+      margin-left: 0;
+    }
+
+    .dashboard__sidebar-toggle {
+      display: block;
+    }
+  }
 
   &__navbar {
     height: 80px;
@@ -156,6 +193,18 @@
           opacity: 0.8;
           transition: opacity 0.2s;
         }
+
+        @media (max-width: 768px) {
+          &-name {
+            display: none; // Hide name beside profile picture
+          }
+        }
+      }
+
+      .docs-link {
+        @media (max-width: 768px) {
+          display: none;
+        }
       }
     }
   }
@@ -240,6 +289,23 @@
         margin-left: 5px;
       }
     }
+
+    &-close {
+      display: none;
+      position: absolute;
+      top: 100px;
+      left: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: $brand-gray;
+      z-index: 20;
+
+      @media (max-width: 768px) {
+        display: block; // Show the close button on small screens
+      }
+    }
   }
 
   &__content {
@@ -251,6 +317,37 @@
     @media (max-width: 768px) {
       margin-left: 0;
       padding: 20px;
+    }
+  }
+
+  &__sidebar-toggle-mobile {
+    margin-bottom: 16px;
+    color: $brand-blue;
+
+    @media (min-width: 769px) {
+      display: none !important;
+    }
+  }
+
+  &__sidebar-close {
+    position: fixed; // Ensure it stays fixed
+    top: 100px; // Maintain the top position
+    left: 50px; // Align with the left side where the menu bar was
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: $brand-gray;
+    z-index: 30;
+    padding: 5px 10px;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: rgba($brand-gray, 0.1);
+    }
+
+    @media (min-width: 769px) {
+      display: none;
     }
   }
 }
