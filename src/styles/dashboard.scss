@@ -351,3 +351,197 @@
     }
   }
 }
+
+// Dashboard page title
+.dashboard__page-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: $brand-blue;
+  margin-bottom: 24px;
+  font-family: "Avenir Next", sans-serif;
+}
+
+// Stats cards
+.dashboard__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+
+  &__icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+
+    span {
+      font-size: 22px;
+    }
+  }
+
+  &__title {
+    font-size: 14px;
+    color: $brand-gray;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: "Avenir Next", sans-serif;
+  }
+
+  &__count {
+    font-size: 24px;
+    color: $brand-blue;
+    font-weight: 600;
+    font-family: "Avenir Next", sans-serif;
+  }
+}
+
+// Users table
+.dashboard__table-container {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.dashboard__table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    font-family: "Avenir Next", sans-serif;
+  }
+
+  th {
+    color: $brand-gray;
+    font-size: 12px;
+    font-weight: 600;
+    position: relative;
+  }
+
+  td {
+    color: $brand-blue;
+    font-size: 14px;
+
+    a {
+      color: $brand-blue;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .filter-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: $brand-gray;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+
+  .options-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: $brand-gray;
+  }
+
+  .status-badge {
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+
+    &.status-active {
+      background-color: rgba($success, 0.1);
+      color: $success;
+    }
+
+    &.status-inactive {
+      background-color: rgba($brand-gray, 0.1);
+      color: $brand-gray;
+    }
+
+    &.status-pending {
+      background-color: rgba(#f7c46c, 0.1);
+      color: #f7c46c;
+    }
+
+    &.status-blacklisted {
+      background-color: rgba($danger, 0.1);
+      color: $danger;
+    }
+  }
+
+  .loading-cell {
+    text-align: center;
+    padding: 40px 0;
+    color: $brand-gray;
+  }
+}
+
+.dashboard__table-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  font-family: "Avenir Next", sans-serif;
+
+  span {
+    color: $brand-gray;
+    font-size: 14px;
+  }
+
+  .pagination-controls {
+    display: flex;
+    gap: 5px;
+
+    button {
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgba($brand-gray, 0.1);
+      background: white;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &.active {
+        background-color: rgba($brand-blue, 0.1);
+        color: $brand-blue;
+      }
+
+      &:hover {
+        border-color: $brand-teal;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

@@ -2,12 +2,48 @@ import React, { useState, useEffect } from "react";
 import "../styles/dashboard.scss";
 import unionLogo from "../assets/Union.png";
 import profilePic from "../assets/DP.png";
+import { Link } from "react-router-dom";
+import { fetchAllUsers } from "../services/db"; // Using the existing service
+
+// Card component for dashboard statistics
+interface StatCardProps {
+  title: string;
+  count: number | string;
+  icon: string;
+  iconColor: string;
+}
+
+const StatCard: React.FC<StatCardProps> = ({
+  title,
+  count,
+  icon,
+  iconColor,
+}) => (
+  <div className="stat-card">
+    <div
+      className="stat-card__icon"
+      style={{ backgroundColor: `${iconColor}10` }}
+    >
+      <span style={{ color: iconColor }}>{icon}</span>
+    </div>
+    <div className="stat-card__title">{title.toUpperCase()}</div>
+    <div className="stat-card__count">{count}</div>
+  </div>
+);
 
 function Dashboard() {
-  // Set sidebar closed by default on mobile
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
+  const [users, setUsers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("all");
 
-  // Monitor window resize to automatically adjust sidebar state
+  const [userStats, setUserStats] = useState({
+    totalUsers: 0,
+    activeUsers: 0,
+    usersWithLoans: 0,
+    usersWithSavings: 102, // Mock data for savings
+  });
+
   useEffect(() => {
     const handleResize = () => {
       setIsSidebarOpen(window.innerWidth > 768);
@@ -17,11 +53,36 @@ function Dashboard() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const userData = await fetchAllUsers();
+        setUsers(userData);
+
+        setUserStats({
+          totalUsers: userData.length,
+          activeUsers:
+            userData.filter((user) => user.status === "Active").length ||
+            Math.floor(userData.length * 0.6),
+          usersWithLoans: userData.filter((user) => user.loanRepayment > 0)
+            .length,
+          usersWithSavings: 102, // Mock data for savings
+        });
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error loading users:", error);
+        setLoading(false);
+      }
+    };
+
+    loadUsers();
+  }, []);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Icons for sidebar menu items (completed icons object)
   const icons = {
     dashboard: "🏠",
     users: "👥",
@@ -58,9 +119,7 @@ function Dashboard() {
     <div
       className={`dashboard ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
     >
-      {/* Top Navigation Bar */}
       <nav className="dashboard__navbar">
-        {/* Logo and sidebar toggle button */}
         <div className="dashboard__navbar-logo">
           {!isSidebarOpen && (
             <button
@@ -77,7 +136,6 @@ function Dashboard() {
           <span className="dashboard__navbar-logo-text">lendsqr</span>
         </div>
 
-        {/* Search */}
         <div className="dashboard__navbar-search">
           <input type="text" placeholder="Search for anything" />
           <button>
@@ -106,7 +164,6 @@ function Dashboard() {
           </button>
         </div>
 
-        {/* Right section */}
         <div className="dashboard__navbar-right">
           <a href="#" className="dashboard__navbar-right-link docs-link">
             Docs
@@ -159,12 +216,9 @@ function Dashboard() {
         </div>
       </nav>
 
-      {/* Main content area */}
       <div className="dashboard__main">
-        {/* Sidebar */}
         {(isSidebarOpen || window.innerWidth > 768) && (
           <aside className="dashboard__sidebar">
-            {/* Close button */}
             <button
               className="dashboard__sidebar-close"
               onClick={toggleSidebar}
@@ -179,7 +233,6 @@ function Dashboard() {
               ✖
             </button>
 
-            {/* Organization Switcher */}
             <div className="dashboard__sidebar-select">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path
@@ -202,13 +255,11 @@ function Dashboard() {
               </svg>
             </div>
 
-            {/* Dashboard link */}
             <div className="dashboard__sidebar-item">
               {renderIcon("dashboard")}
               <span>Dashboard</span>
             </div>
 
-            {/* CUSTOMERS section */}
             <div className="dashboard__sidebar-header">CUSTOMERS</div>
             <div className="dashboard__sidebar-item active">
               {renderIcon("users")}
@@ -243,7 +294,6 @@ function Dashboard() {
               <span>Karma</span>
             </div>
 
-            {/* BUSINESSES section */}
             <div className="dashboard__sidebar-header">BUSINESSES</div>
             <div className="dashboard__sidebar-item">
               {renderIcon("organization")}
@@ -282,7 +332,6 @@ function Dashboard() {
               <span>Reports</span>
             </div>
 
-            {/* SETTINGS section */}
             <div className="dashboard__sidebar-header">SETTINGS</div>
             <div className="dashboard__sidebar-item">
               {renderIcon("preferences")}
@@ -299,13 +348,111 @@ function Dashboard() {
           </aside>
         )}
 
-        {/* Main content */}
         <main className="dashboard__content">
-          <h1>Dashboard Overview</h1>
-          <p>
-            Welcome to your dashboard. This is where you'll see statistics and
-            manage your account.
-          </p>
+          <h1 className="dashboard__page-title">Users</h1>
+
+          <div className="dashboard__stats">
+            <StatCard
+              title="users"
+              count={loading ? "..." : userStats.totalUsers}
+              icon="👥"
+              iconColor="#DF18FF"
+            />
+            <StatCard
+              title="active users"
+              count={loading ? "..." : userStats.activeUsers}
+              icon="👤"
+              iconColor="#5718FF"
+            />
+            <StatCard
+              title="users with loans"
+              count={loading ? "..." : userStats.usersWithLoans}
+              icon="💰"
+              iconColor="#F55F44"
+            />
+            <StatCard
+              title="users with savings"
+              count={loading ? "..." : userStats.usersWithSavings}
+              icon="💵"
+              iconColor="#FF3366"
+            />
+          </div>
+
+          <div className="dashboard__table-container">
+            <table className="dashboard__table">
+              <thead>
+                <tr>
+                  <th>
+                    ORGANIZATION
+                    <button className="filter-btn">⌄</button>
+                  </th>
+                  <th>
+                    USERNAME
+                    <button className="filter-btn">⌄</button>
+                  </th>
+                  <th>
+                    EMAIL
+                    <button className="filter-btn">⌄</button>
+                  </th>
+                  <th>
+                    PHONE NUMBER
+                    <button className="filter-btn">⌄</button>
+                  </th>
+                  <th>
+                    DATE JOINED
+                    <button className="filter-btn">⌄</button>
+                  </th>
+                  <th>
+                    STATUS
+                    <button className="filter-btn">⌄</button>
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan={7} className="loading-cell">
+                      Loading users...
+                    </td>
+                  </tr>
+                ) : (
+                  users.slice(0, 10).map((user) => (
+                    <tr key={user.id}>
+                      <td>{user.sectorOfEmployment || "N/A"}</td>
+                      <td>
+                        <Link to={`/users/${user.id}`}>{user.fullName}</Link>
+                      </td>
+                      <td>{user.emailAddress}</td>
+                      <td>{user.phoneNumber}</td>
+                      <td>{new Date().toLocaleDateString()}</td>
+                      <td>
+                        <span
+                          className={`status-badge status-${user.status || "active"}`}
+                        >
+                          {user.status || "Active"}
+                        </span>
+                      </td>
+                      <td>
+                        <button className="options-btn">⋮</button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+
+            <div className="dashboard__table-pagination">
+              <span>Showing 1-10 of {users.length} results</span>
+              <div className="pagination-controls">
+                <button>&lt;</button>
+                <button className="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>&gt;</button>
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     </div>
