@@ -190,7 +190,7 @@ function Dashboard() {
                         <td>{new Date().toLocaleDateString()}</td>
                         <td>
                           <span
-                            className={`status-badge status-${user.status || "active"}`}
+                            className={`status-badge status-${(user.status || "active").toLowerCase()}`}
                           >
                             {user.status || "Active"}
                           </span>
