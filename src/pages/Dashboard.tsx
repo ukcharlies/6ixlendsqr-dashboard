@@ -5,6 +5,8 @@ import { fetchAllUsers } from "../services/db";
 import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 import Pagination from "../components/layout/Pagination";
+import FilterModal from "../components/users/FilterModal";
+import UserMenu from "../components/users/UserMenu";
 
 // Card component for dashboard statistics
 interface StatCardProps {
@@ -48,6 +50,15 @@ function Dashboard() {
     usersWithLoans: 0,
     usersWithSavings: 102, // Mock data for savings
   });
+
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [activeMenu, setActiveMenu] = useState<number | null>(null);
+
+  const handleFilter = (filters: any) => {
+    // Implement your filter logic here
+    console.log("Filtering with:", filters);
+    setActiveFilter(null);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -98,6 +109,24 @@ function Dashboard() {
     setCurrentPage(pageNumber);
   };
 
+  const renderFilterButton = (column: string) => (
+    <button
+      className="filter-btn"
+      onClick={() => setActiveFilter(activeFilter === column ? null : column)}
+    >
+      ⌄
+      {activeFilter === column && (
+        <FilterModal
+          isOpen={true}
+          onClose={() => setActiveFilter(null)}
+          onFilter={handleFilter}
+          organizations={Array.from(new Set(users.map((u) => u.organization)))}
+          statuses={["Active", "Inactive", "Pending", "Blacklisted"]}
+        />
+      )}
+    </button>
+  );
+
   return (
     <div
       className={`dashboard ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
@@ -146,27 +175,27 @@ function Dashboard() {
                   <tr>
                     <th>
                       <span>ORGANIZATION</span>
-                      <button className="filter-btn">⌄</button>
+                      {renderFilterButton("organization")}
                     </th>
                     <th>
                       <span>USERNAME</span>
-                      <button className="filter-btn">⌄</button>
+                      {renderFilterButton("username")}
                     </th>
                     <th>
                       <span>EMAIL</span>
-                      <button className="filter-btn">⌄</button>
+                      {renderFilterButton("email")}
                     </th>
                     <th>
                       <span>PHONE NUMBER</span>
-                      <button className="filter-btn">⌄</button>
+                      {renderFilterButton("phoneNumber")}
                     </th>
                     <th>
                       <span>DATE JOINED</span>
-                      <button className="filter-btn">⌄</button>
+                      {renderFilterButton("dateJoined")}
                     </th>
                     <th>
                       <span>STATUS</span>
-                      <button className="filter-btn">⌄</button>
+                      {renderFilterButton("status")}
                     </th>
                     <th></th>
                   </tr>
@@ -195,8 +224,32 @@ function Dashboard() {
                             {user.status || "Active"}
                           </span>
                         </td>
-                        <td>
-                          <button className="options-btn">⋮</button>
+                        <td style={{ position: "relative" }}>
+                          <button
+                            className="options-btn"
+                            onClick={() =>
+                              setActiveMenu(
+                                activeMenu === user.id ? null : user.id
+                              )
+                            }
+                          >
+                            ⋮
+                          </button>
+                          {activeMenu === user.id && (
+                            <UserMenu
+                              isOpen={true}
+                              onClose={() => setActiveMenu(null)}
+                              onViewDetails={() => {
+                                /* implement */
+                              }}
+                              onBlacklist={() => {
+                                /* implement */
+                              }}
+                              onActivate={() => {
+                                /* implement */
+                              }}
+                            />
+                          )}
                         </td>
                       </tr>
                     ))
