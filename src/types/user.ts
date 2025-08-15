@@ -6,6 +6,7 @@ export type Guarantor = {
 };
 
 export type User = {
+  status: string;
   id: number;
   fullName: string;
   phoneNumber: string;
