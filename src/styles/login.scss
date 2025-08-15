@@ -1,0 +1,207 @@
+/* login.scss */
+@use "./variables" as *;
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: white; // Set background to white
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  &__left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; // Center vertically
+    padding: 2rem;
+    position: relative; // ensure containing block for absolute
+    // padding-top: 8rem; // reserve space for the logo with professional spacing
+
+    @media (min-width: 768px) {
+      justify-content: center; // Center vertically on large screens
+      align-items: flex-start;
+      padding: 4rem;
+    }
+  }
+
+  &__right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // Center vertically
+    padding: 2rem;
+
+    @media (min-width: 768px) {
+      padding: 4rem;
+    }
+  }
+
+  &__logo {
+    position: absolute; // take it out of normal flow
+    top: 6rem; // provide professional spacing from the top
+    left: 2rem; // align with left padding
+    margin-bottom: 0; // cancel default spacing
+    width: 100%;
+
+    @media (min-width: 768px) {
+      margin-bottom: 6rem;
+    }
+
+    &-container {
+      display: flex;
+      align-items: center;
+    }
+
+    &-icon {
+      height: 50px; // enlarge from 30px to 50px
+      width: 50px; // enlarge from 30px to 50px
+      margin-right: 0.5rem;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &-text {
+      color: $brand-blue;
+      font-weight: bold;
+      font-size: 2rem; // increase font-size for bigger "lendsqr"
+    }
+  }
+
+  &__image {
+    display: none; // Hide on small screens
+
+    @media (min-width: 768px) {
+      display: block; // Show on large screens
+      flex: 1; // Allow the image to take up space
+      display: flex;
+      justify-content: center; // Center horizontally
+      align-items: center; // Center vertically
+      max-width: 600px; // Limit maximum size
+      max-height: 337.57px; // Limit maximum height
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__form {
+    width: 100%;
+    max-width: 450px;
+
+    h1 {
+      font-size: 40px;
+      color: $brand-blue;
+      margin-bottom: 0.5rem;
+      font-family: "Avenir Next", sans-serif;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 20px;
+      color: $brand-gray;
+      margin-bottom: 2.5rem;
+      font-family: "Avenir Next", sans-serif;
+    }
+
+    &-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: $brand-gray;
+      }
+
+      .input-wrapper {
+        position: relative;
+
+        input {
+          width: 100%;
+          padding: 12px 16px;
+          border: 1px solid rgba($brand-gray, 0.15);
+          border-radius: 5px;
+          font-family: "Avenir Next", sans-serif;
+          font-size: 16px;
+          transition:
+            border-color 0.3s,
+            box-shadow 0.3s;
+
+          &:focus {
+            outline: none;
+            border-color: $brand-teal;
+            box-shadow: 0 0 5px rgba($brand-teal, 0.5);
+          }
+
+          &:hover {
+            border-color: $brand-teal;
+          }
+        }
+
+        .toggle-password {
+          position: absolute;
+          right: 16px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: $brand-teal;
+          font-size: 12px;
+          text-transform: uppercase;
+          font-weight: 600;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    &-forgot {
+      display: block;
+      color: $brand-teal;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-decoration: none;
+      font-family: "Avenir Next", sans-serif;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &-submit {
+      width: 100%;
+      padding: 14px;
+      background-color: $brand-teal;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: "Avenir Next", sans-serif;
+      transition:
+        background-color 0.3s,
+        opacity 0.3s;
+
+      &:hover {
+        background-color: darken($brand-teal, 10%);
+        opacity: 0.9;
+      }
+    }
+  }
+}
