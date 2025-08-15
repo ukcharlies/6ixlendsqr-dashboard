@@ -22,31 +22,31 @@ function Dashboard() {
   };
 
   // Icons for sidebar menu items (completed icons object)
-  const renderIcon = (name: string) => {
-    const icons = {
-      dashboard: "🏠",
-      users: "👥",
-      guarantors: "🤝",
-      loans: "💰",
-      "decision-models": "📊",
-      savings: "💵",
-      "loan-requests": "📄",
-      whitelist: "✅",
-      karma: "🌟",
-      organization: "🏢",
-      "loan-products": "📦",
-      "savings-products": "💳",
-      fees: "💸",
-      transactions: "🔄",
-      services: "🛠️",
-      "service-account": "🔐",
-      settlements: "⚖️",
-      reports: "📑",
-      preferences: "⚙️",
-      "fees-pricing": "💲",
-      "audit-logs": "📝",
-    };
+  const icons = {
+    dashboard: "🏠",
+    users: "👥",
+    guarantors: "🤝",
+    loans: "💰",
+    "decision-models": "📊",
+    savings: "💵",
+    "loan-requests": "📄",
+    whitelist: "✅",
+    karma: "🌟",
+    organization: "🏢",
+    "loan-products": "📦",
+    "savings-products": "💳",
+    fees: "💸",
+    transactions: "🔄",
+    services: "🛠️",
+    "service-account": "🔐",
+    settlements: "⚖️",
+    reports: "📑",
+    preferences: "⚙️",
+    "fees-pricing": "💲",
+    "audit-logs": "📝",
+  };
 
+  const renderIcon = (name: keyof typeof icons) => {
     return (
       <div className="dashboard__sidebar-item-icon">
         <span>{icons[name] || "📋"}</span>
@@ -171,8 +171,8 @@ function Dashboard() {
               aria-label="Close sidebar"
               style={{
                 position: "absolute",
-                top: "10px",
-                right: "10px",
+                top: "115px",
+                left: "10px",
                 zIndex: 30,
               }}
             >
