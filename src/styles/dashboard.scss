@@ -307,6 +307,35 @@
         display: block; // Show the close button on small screens
       }
     }
+
+    &-spacer {
+      height: 100px; // Professional spacing before divider
+    }
+
+    &-divider {
+      height: 1px;
+      background-color: rgba($brand-gray, 0.1);
+      margin: 0 30px;
+    }
+
+    &-logout {
+      margin-top: 20px;
+      color: $brand-red !important; // Using !important to override default item color
+
+      .dashboard__sidebar-item-icon {
+        span {
+          color: $brand-red;
+        }
+      }
+    }
+
+    &-version {
+      padding: 16px 30px;
+      color: $brand-gray;
+      font-size: 12px;
+      font-family: "Work Sans", sans-serif;
+      opacity: 0.6;
+    }
   }
 
   &__content {
