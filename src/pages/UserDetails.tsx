@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchUserById } from "../services/db";
+import { getUserLocal, saveUserLocal } from "../services/storage";
 import type { User } from "../types/user";
 import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 import "../styles/userDetails.scss";
-
-// Local storage functions
-const saveUserLocal = (user: User) => {
-  const storedUsers = JSON.parse(localStorage.getItem("userDetails") || "{}");
-  storedUsers[user.id] = user;
-  localStorage.setItem("userDetails", JSON.stringify(storedUsers));
-};
-
-const getUserLocal = (id: number): User | null => {
-  const storedUsers = JSON.parse(localStorage.getItem("userDetails") || "{}");
-  return storedUsers[id] || null;
-};
 
 const UserDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,30 +14,44 @@ const UserDetails: React.FC = () => {
   const [activeTab, setActiveTab] = useState("General Details");
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!id) return;
-
-      const userId = parseInt(id);
-
-      // Try to get from local storage first
-      const localUser = getUserLocal(userId);
-      if (localUser) {
-        setUser(localUser);
+      if (!id) {
+        setError("Invalid user ID");
         setLoading(false);
         return;
       }
 
+      setLoading(true);
+      setError(null);
+
       try {
-        const fetchedUser = await fetchUserById(userId);
-        if (fetchedUser) {
-          setUser(fetchedUser);
-          // Save to local storage for future use
-          saveUserLocal(fetchedUser);
+        const userId = parseInt(id);
+        let userData = null;
+
+        // Try local storage first
+        const localData = getUserLocal(userId);
+        if (localData) {
+          userData = localData;
+        } else {
+          // Fallback to API
+          const apiData = await fetchUserById(userId);
+          if (apiData) {
+            userData = apiData;
+            saveUserLocal(apiData);
+          }
         }
-      } catch (error) {
-        console.error("Error fetching user details:", error);
+
+        if (userData) {
+          setUser(userData);
+        } else {
+          setError("User not found");
+        }
+      } catch (err) {
+        setError("Error loading user details");
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -86,7 +89,25 @@ const UserDetails: React.FC = () => {
             <Sidebar toggleSidebar={toggleSidebar} activeItem="users" />
           )}
           <div className="user-details-page__content">
-            <div className="loading-state">Loading user details...</div>
+            <div data-testid="loading-state" className="loading-state">
+              Loading user details...
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="user-details-page">
+        <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <div className="user-details-page__main">
+          {isSidebarOpen && (
+            <Sidebar toggleSidebar={toggleSidebar} activeItem="users" />
+          )}
+          <div className="user-details-page__content">
+            <div className="error-state">{error}</div>
           </div>
         </div>
       </div>
@@ -133,6 +154,7 @@ const UserDetails: React.FC = () => {
             <h1>User Details</h1>
             <div className="action-buttons">
               <button
+                data-testid="blacklist-button"
                 className="blacklist-button"
                 onClick={handleBlacklistUser}
               >
@@ -151,7 +173,7 @@ const UserDetails: React.FC = () => {
                   <span className="user-emoji">👤</span>
                 </div>
                 <div className="user-name-id">
-                  <h2>{user.fullName}</h2>
+                  <h2 data-testid="user-full-name">{user.fullName}</h2>
                   <p>{`LSQFf${user.id}g90`}</p>
                 </div>
               </div>

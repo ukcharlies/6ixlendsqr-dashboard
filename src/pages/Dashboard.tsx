@@ -267,7 +267,7 @@ function Dashboard() {
                   {loading ? (
                     <tr>
                       <td colSpan={7} className="loading-cell">
-                        Loading users...
+                        <div data-testid="loading-state">Loading users...</div>
                       </td>
                     </tr>
                   ) : (
@@ -275,7 +275,9 @@ function Dashboard() {
                       <tr key={user.id}>
                         <td>{user.organization || "N/A"}</td>
                         <td>
-                          <Link to={`/users/${user.id}`}>{user.fullName}</Link>
+                          <Link to={`/users/${user.id}`}>
+                            <span data-testid="user-name">{user.fullName}</span>
+                          </Link>
                         </td>
                         <td>{user.emailAddress}</td>
                         <td>{user.phoneNumber}</td>
@@ -284,7 +286,9 @@ function Dashboard() {
                           <span
                             className={`status-badge status-${(user.status || "active").toLowerCase()}`}
                           >
-                            {user.status || "Active"}
+                            <span data-testid="user-status">
+                              {user.status || "Active"}
+                            </span>
                           </span>
                         </td>
                         <td style={{ position: "relative" }}>
