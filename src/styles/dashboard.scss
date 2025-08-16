@@ -299,9 +299,9 @@
     &-close {
       display: flex;
       position: absolute; // Change from fixed to absolute
-      top: 10px; // Move it higher to the top
-      left: 10px; // Position it in the left corner
-      background: white;
+      top: 0px !important; // Move to the very top
+      left: 5px !important; // Move to the very left
+      background: none !important;
       border: 1px solid rgba($brand-gray, 0.1);
       border-radius: 50%;
       width: 30px;
@@ -314,11 +314,11 @@
       z-index: 1000;
       transition: all 0.2s ease-in-out;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 10px; // Add margin instead of positioning with top/left
 
       @media (max-width: 768px) {
         display: flex; // Ensure it's always flex
-        left: 10px;
-        top: 10px; // Consistent positioning on mobile
+        margin: 10px; // Consistent margin on mobile
       }
 
       &.hidden {
@@ -329,7 +329,7 @@
       }
 
       &:hover {
-        background-color: rgba($brand-blue, 0.05);
+        background-color: rgba($brand-blue, 0.05) !important;
         transform: scale(1.1);
       }
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchAllUsers } from "../services/db";
 import type { User } from "../types/user";
 import { Link } from "react-router-dom";
