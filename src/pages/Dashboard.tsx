@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../styles/dashboard.scss";
 import { Link } from "react-router-dom";
-import { fetchAllUsers } from "../services/db";
-import Header from "../components/layout/Header";
-import Sidebar from "../components/layout/Sidebar";
-import Pagination from "../components/layout/Pagination";
-import FilterModal from "../components/users/FilterModal";
-import UserMenu from "../components/users/UserMenu";
+import { fetchAllUsers } from "@/services/db";
+import Header from "@/components/layout/Header";
+import Sidebar from "@/components/layout/Sidebar";
+import Pagination from "@/components/layout/Pagination";
+import FilterModal from "@/components/users/FilterModal";
+import UserMenu from "@/components/users/UserMenu";
 
 // Card component for dashboard statistics
 interface StatCardProps {
@@ -143,9 +143,13 @@ function Dashboard() {
       const currentScrollPosition = window.scrollY;
       const isScrollingDown = currentScrollPosition > lastScrollPosition;
 
-      // Only hide/show if we've scrolled more than 50px
+      // Only update if we've scrolled more than 50px
       if (Math.abs(currentScrollPosition - lastScrollPosition) > 50) {
         setIsCloseButtonVisible(!isScrollingDown);
+        // On mobile, also close sidebar when scrolling down
+        if (isScrollingDown && window.innerWidth <= 768) {
+          setIsSidebarOpen(false);
+        }
         setLastScrollPosition(currentScrollPosition);
       }
     };
@@ -156,6 +160,8 @@ function Dashboard() {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+    // Reset the close button visibility when manually toggling
+    setIsCloseButtonVisible(true);
   };
 
   // Pagination logic - get current items
