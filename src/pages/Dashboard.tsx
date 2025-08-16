@@ -168,12 +168,15 @@ function Dashboard() {
     setCurrentPage(pageNumber);
   };
 
+  // Render filter button with modal
   const renderFilterButton = (column: string) => (
     <button
       className="filter-btn"
+      data-testid={`filter-btn-${column}`}
+      aria-label={`filter-${column}`}
       onClick={() => setActiveFilter(activeFilter === column ? null : column)}
     >
-      ⌄
+      <span aria-hidden="true">⌄</span>
       {activeFilter === column && (
         <FilterModal
           isOpen={true}

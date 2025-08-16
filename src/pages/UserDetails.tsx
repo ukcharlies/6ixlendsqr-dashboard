@@ -177,6 +177,25 @@ const UserDetails: React.FC = () => {
                   <p>{`LSQFf${user.id}g90`}</p>
                 </div>
               </div>
+
+              {/* Small status element for tests (visible UI unchanged)
+              <div
+                className="user-status-summary"
+                style={{ marginLeft: "auto", textAlign: "right" }}
+              >
+                <p className="detail-label" style={{ margin: 0 }}>
+                  Status
+                </p>
+                <div>
+                  <span
+                    data-testid="user-status"
+                    className={`status-badge status-${(user.status || "active").toLowerCase()}`}
+                  >
+                    {user.status || "Active"}
+                  </span>
+                </div>
+              </div> */}
+
               <div className="user-tier">
                 <p>User's Tier</p>
                 <div className="tier-stars">
