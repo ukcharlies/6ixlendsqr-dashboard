@@ -36,6 +36,8 @@ const StatCard: React.FC<StatCardProps> = ({
 
 function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
+  const [isCloseButtonVisible, setIsCloseButtonVisible] = useState(true);
+  const [lastScrollPosition, setLastScrollPosition] = useState(0);
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [] = useState("all");
@@ -136,6 +138,22 @@ function Dashboard() {
     loadUsers();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPosition = window.scrollY;
+      const isScrollingDown = currentScrollPosition > lastScrollPosition;
+
+      // Only hide/show if we've scrolled more than 50px
+      if (Math.abs(currentScrollPosition - lastScrollPosition) > 50) {
+        setIsCloseButtonVisible(!isScrollingDown);
+        setLastScrollPosition(currentScrollPosition);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollPosition]);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -176,7 +194,11 @@ function Dashboard() {
 
       <div className="dashboard__main">
         {(isSidebarOpen || window.innerWidth > 768) && (
-          <Sidebar toggleSidebar={toggleSidebar} activeItem="users" />
+          <Sidebar
+            toggleSidebar={toggleSidebar}
+            activeItem="users"
+            isCloseButtonVisible={isCloseButtonVisible}
+          />
         )}
 
         <main className="dashboard__content">
