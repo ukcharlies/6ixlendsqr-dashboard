@@ -251,7 +251,7 @@ function Dashboard() {
                   ) : (
                     currentUsers.map((user) => (
                       <tr key={user.id}>
-                        <td>{user.sectorOfEmployment || "N/A"}</td>
+                        <td>{user.organization || "N/A"}</td>
                         <td>
                           <Link to={`/users/${user.id}`}>{user.fullName}</Link>
                         </td>

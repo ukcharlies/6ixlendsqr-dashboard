@@ -1,0 +1,386 @@
+/* userDetails.scss */
+@use "./variables" as *;
+@use "sass:color";
+
+.user-details-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Work Sans", sans-serif;
+
+  &__main {
+    display: flex;
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
+    background-color: #f8fafc;
+
+    @media (max-width: 768px) {
+      margin-top: 140px;
+      flex-direction: column;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    margin-left: 283px;
+    padding: 30px;
+
+    @media (max-width: 768px) {
+      margin-left: 0;
+      padding: 20px;
+    }
+  }
+
+  .loading-state,
+  .error-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    font-family: "Work Sans", sans-serif;
+    color: $brand-gray;
+  }
+}
+
+// Back navigation
+.back-nav {
+  margin-bottom: 30px;
+
+  .back-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: $brand-blue;
+    font-size: 16px;
+    font-family: "Work Sans", sans-serif;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .back-icon {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+  }
+}
+
+// User details header
+.user-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+    color: $brand-blue;
+    margin: 0;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 20px;
+
+    button {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: "Work Sans", sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+
+      &.blacklist-button {
+        border: 1px solid #e4033b;
+        background-color: transparent;
+        color: #e4033b;
+
+        &:hover {
+          background-color: rgba(#e4033b, 0.05);
+        }
+      }
+
+      &.activate-button {
+        border: 1px solid $brand-teal;
+        background-color: transparent;
+        color: $brand-teal;
+
+        &:hover {
+          background-color: rgba($brand-teal, 0.05);
+        }
+      }
+    }
+  }
+}
+
+// User summary card
+.user-summary-card {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+
+  .user-summary-top {
+    display: flex;
+    padding: 30px;
+    border-bottom: 1px solid rgba($brand-gray, 0.1);
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      padding-right: 30px;
+      border-right: 1px solid rgba($brand-gray, 0.1);
+
+      @media (max-width: 768px) {
+        border-right: none;
+        padding-right: 0;
+        border-bottom: 1px solid rgba($brand-gray, 0.1);
+        padding-bottom: 20px;
+      }
+
+      .user-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 20px;
+        background-color: #f5f5f7;
+        border: 2px solid #213f7d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .user-emoji {
+          font-size: 40px;
+        }
+      }
+
+      .user-name-id {
+        h2 {
+          font-size: 22px;
+          margin: 0 0 8px 0;
+          color: $brand-blue;
+          font-family: "Work Sans", sans-serif;
+        }
+
+        p {
+          margin: 0;
+          color: $brand-gray;
+          font-size: 14px;
+          font-family: "Work Sans", sans-serif;
+        }
+      }
+    }
+
+    .user-tier {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 30px;
+
+      @media (max-width: 768px) {
+        padding: 20px 0;
+        border-bottom: 1px solid rgba($brand-gray, 0.1);
+      }
+
+      p {
+        margin: 0 0 10px 0;
+        color: $brand-gray;
+        font-size: 14px;
+        font-family: "Work Sans", sans-serif;
+      }
+
+      .tier-stars {
+        display: flex;
+        gap: 4px;
+        font-size: 16px;
+
+        .filled {
+          color: $brand-teal;
+        }
+
+        .empty {
+          color: rgba($brand-gray, 0.2);
+        }
+      }
+    }
+
+    .user-balance {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 30px;
+      border-left: 1px solid rgba($brand-gray, 0.1);
+
+      @media (max-width: 768px) {
+        border-left: none;
+        padding-left: 0;
+      }
+
+      h2 {
+        font-size: 22px;
+        margin: 0 0 8px 0;
+        color: $brand-blue;
+        font-family: "Work Sans", sans-serif;
+      }
+
+      p {
+        margin: 0;
+        color: $brand-gray;
+        font-size: 14px;
+        font-family: "Work Sans", sans-serif;
+      }
+    }
+  }
+
+  .user-summary-tabs {
+    display: flex;
+    overflow-x: auto;
+
+    button {
+      padding: 15px 30px;
+      background: none;
+      border: none;
+      color: rgba($brand-blue, 0.8);
+      font-size: 16px;
+      font-family: "Work Sans", sans-serif;
+      white-space: nowrap;
+      cursor: pointer;
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: transparent;
+      }
+
+      &.active {
+        color: $brand-teal;
+
+        &:after {
+          background-color: $brand-teal;
+        }
+      }
+
+      &:hover:not(.active) {
+        color: $brand-blue;
+        background-color: rgba($brand-blue, 0.02);
+      }
+    }
+  }
+}
+
+// User details card
+.user-details-card {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+
+  .user-details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    .details-section {
+      width: 100%;
+      margin-bottom: 0;
+      padding: 30px;
+      border-bottom: 1px solid rgba($brand-gray, 0.1);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      h3 {
+        font-size: 16px;
+        color: $brand-blue;
+        margin: 0 0 30px 0;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 500;
+      }
+
+      .details-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+
+        @media (max-width: 1200px) {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 992px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 576px) {
+          grid-template-columns: 1fr;
+        }
+
+        .detail-item {
+          .detail-label {
+            margin: 0 0 8px 0;
+            color: $brand-gray;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-family: "Work Sans", sans-serif;
+            font-weight: 500;
+          }
+
+          .detail-value {
+            margin: 0;
+            color: $brand-blue;
+            font-size: 16px;
+            font-family: "Work Sans", sans-serif;
+          }
+        }
+      }
+
+      .guarantor-details {
+        &:not(:last-child) {
+          margin-bottom: 30px;
+          padding-bottom: 30px;
+          border-bottom: 1px solid rgba($brand-gray, 0.05);
+        }
+      }
+    }
+  }
+
+  .coming-soon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: $brand-gray;
+    font-family: "Work Sans", sans-serif;
+    font-size: 18px;
+  }
+}
