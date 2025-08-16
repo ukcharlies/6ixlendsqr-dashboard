@@ -1,0 +1,35 @@
+@use "../../styles/variables" as *;
+
+.user-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  width: 180px;
+  z-index: 100;
+  padding: 10px 0;
+
+  button {
+    width: 100%;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: $brand-gray;
+    font-size: 14px;
+    text-align: left;
+
+    &:hover {
+      background-color: rgba($brand-blue, 0.04);
+    }
+
+    .icon {
+      font-size: 16px;
+    }
+  }
+}
