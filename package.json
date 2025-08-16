@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test:watch": "vitest --watch",
     "lint": "eslint --ext .ts,.tsx src",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "vercel-build": "vite build"
   },
   "dependencies": {
     "@mswjs/data": "^0.16.2",

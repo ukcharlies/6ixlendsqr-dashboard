@@ -4,9 +4,9 @@ import { fetchUserById } from "../services/db";
 import { getUserLocal, saveUserLocal } from "../services/storage";
 import type { User } from "../types/user";
 // @ts-ignore
-import Header from "@components/layout/Header";
+import Header from "../components/layout/Header";
 // @ts-ignore
-import Sidebar from "@components/layout/Sidebar";
+import Sidebar from "../components/layout/Sidebar";
 import "../styles/userDetails.scss";
 
 const UserDetails: React.FC = () => {
