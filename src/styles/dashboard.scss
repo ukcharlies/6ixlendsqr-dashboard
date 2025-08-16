@@ -58,7 +58,9 @@
 
     @media (max-width: 768px) {
       height: auto;
-      padding: 15px;
+      padding: 12px 15px;
+      flex-wrap: wrap;
+      justify-content: space-between;
     }
 
     &-logo {
@@ -68,7 +70,8 @@
 
       @media (max-width: 768px) {
         margin-right: 0;
-        margin-bottom: 10px;
+        margin-bottom: 0;
+        flex: 0 1 auto;
       }
 
       &-icon {
@@ -97,9 +100,17 @@
       align-items: center;
 
       @media (max-width: 768px) {
+        order: 3;
         max-width: 100%;
-        width: 100%;
-        margin: 10px 0;
+        margin: 10px 0 0;
+
+        &.collapsed {
+          display: none;
+        }
+
+        input {
+          font-size: 14px;
+        }
       }
 
       input {
@@ -137,10 +148,19 @@
       gap: 32px;
 
       @media (max-width: 768px) {
-        width: 100%;
-        justify-content: space-between;
+        margin-left: 0;
         gap: 15px;
-        margin-top: 10px;
+        flex: 0 1 auto;
+
+        &-profile {
+          &-name {
+            display: none;
+          }
+        }
+
+        .docs-link {
+          display: none;
+        }
       }
 
       &-link {
@@ -204,6 +224,27 @@
       .docs-link {
         @media (max-width: 768px) {
           display: none;
+        }
+      }
+    }
+
+    &-search-mobile {
+      display: none;
+
+      @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        color: $brand-blue;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba($brand-blue, 0.05);
+          border-radius: 50%;
         }
       }
     }

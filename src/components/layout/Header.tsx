@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import unionLogo from "../../assets/Union.png";
 import profilePic from "../../assets/DP.png";
 import "./Header.module.scss";
@@ -9,6 +9,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
   return (
     <nav className="dashboard__navbar">
       <div className="dashboard__navbar-logo">
@@ -27,7 +29,9 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
         <span className="dashboard__navbar-logo-text">lendsqr</span>
       </div>
 
-      <div className="dashboard__navbar-search">
+      <div
+        className={`dashboard__navbar-search ${!isSearchVisible ? "collapsed" : ""}`}
+      >
         <input type="text" placeholder="Search for anything" />
         <button>
           <svg
@@ -54,6 +58,30 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
           </svg>
         </button>
       </div>
+
+      {/* Add mobile search toggle button */}
+      <button
+        className="dashboard__navbar-search-mobile"
+        onClick={() => setIsSearchVisible(!isSearchVisible)}
+        aria-label="Toggle search"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path
+            d="M6.5 12C9.53757 12 12 9.53757 12 6.5C12 3.46243 9.53757 1 6.5 1C3.46243 1 1 3.46243 1 6.5C1 9.53757 3.46243 12 6.5 12Z"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M11 11L15 15"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
 
       <div className="dashboard__navbar-right">
         <a href="#" className="dashboard__navbar-right-link docs-link">
