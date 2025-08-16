@@ -39,6 +39,7 @@ function Dashboard() {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [] = useState("all");
+  const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,10 +56,50 @@ function Dashboard() {
   const [activeMenu, setActiveMenu] = useState<number | null>(null);
 
   const handleFilter = (filters: any) => {
-    // Implement your filter logic here
-    console.log("Filtering with:", filters);
+    let filtered = [...users];
+
+    if (filters.organization) {
+      filtered = filtered.filter((user) =>
+        user.organization
+          ?.toLowerCase()
+          .includes(filters.organization.toLowerCase())
+      );
+    }
+    if (filters.username) {
+      filtered = filtered.filter((user) =>
+        user.fullName?.toLowerCase().includes(filters.username.toLowerCase())
+      );
+    }
+    if (filters.email) {
+      filtered = filtered.filter((user) =>
+        user.emailAddress?.toLowerCase().includes(filters.email.toLowerCase())
+      );
+    }
+    if (filters.phoneNumber) {
+      filtered = filtered.filter((user) =>
+        user.phoneNumber?.includes(filters.phoneNumber)
+      );
+    }
+    if (filters.status) {
+      filtered = filtered.filter(
+        (user) => user.status?.toLowerCase() === filters.status.toLowerCase()
+      );
+    }
+    if (filters.date) {
+      const filterDate = new Date(filters.date).toLocaleDateString();
+      filtered = filtered.filter(
+        (user) => new Date(user.createdAt).toLocaleDateString() === filterDate
+      );
+    }
+
+    setFilteredUsers(filtered);
+    setCurrentPage(1); // Reset to first page
     setActiveFilter(null);
   };
+
+  useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -102,7 +143,7 @@ function Dashboard() {
   // Pagination logic - get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentUsers = users.slice(indexOfFirstItem, indexOfLastItem);
+  const currentUsers = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 
   // Change page
   const paginate = (pageNumber: number) => {
@@ -259,7 +300,7 @@ function Dashboard() {
 
               <Pagination
                 currentPage={currentPage}
-                totalItems={users.length}
+                totalItems={filteredUsers.length}
                 itemsPerPage={itemsPerPage}
                 onPageChange={paginate}
               />
