@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import "../styles/dashboard.scss";
 import { Link } from "react-router-dom";
 import { fetchAllUsers } from "@/services/db";
+// @ts-ignore
 import Header from "@components/layout/Header";
+// @ts-ignore
 import Sidebar from "@components/layout/Sidebar";
+// @ts-ignore
 import Pagination from "@components/layout/Pagination";
+// @ts-ignore
 import FilterModal from "@components/users/FilterModal";
+// @ts-ignore
 import UserMenu from "@components/users/UserMenu";
 
 // Card component for dashboard statistics

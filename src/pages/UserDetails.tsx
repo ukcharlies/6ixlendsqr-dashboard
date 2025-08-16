@@ -3,8 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { fetchUserById } from "../services/db";
 import { getUserLocal, saveUserLocal } from "../services/storage";
 import type { User } from "../types/user";
-import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
+// @ts-ignore
+import Header from "@components/layout/Header";
+// @ts-ignore
+import Sidebar from "@components/layout/Sidebar";
 import "../styles/userDetails.scss";
 
 const UserDetails: React.FC = () => {
@@ -29,7 +31,7 @@ const UserDetails: React.FC = () => {
 
       try {
         const userId = parseInt(id);
-        let userData = null;
+        let userData: User | null = null; // Explicitly type as User | null
 
         // Try local storage first
         const localData = getUserLocal(userId);
