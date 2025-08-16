@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchUserById } from "@/services/db";
-import { getUserLocal, saveUserLocal } from "@/services/storage";
-import type { User } from "@/types/user";
-import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
+import { fetchUserById } from "../services/db";
+import { getUserLocal, saveUserLocal } from "../services/storage";
+import type { User } from "../types/user";
+import Header from "../components/layout/Header";
+import Sidebar from "../components/layout/Sidebar";
 import "../styles/userDetails.scss";
 
 const UserDetails: React.FC = () => {
