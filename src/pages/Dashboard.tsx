@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../styles/dashboard.scss";
 import { Link } from "react-router-dom";
-import { fetchAllUsers } from "../services/db";
-import Header from "../components/layout/Header";
-import Sidebar from "../components/layout/Sidebar";
-import Pagination from "../components/layout/Pagination";
-import FilterModal from "../components/users/FilterModal";
-import UserMenu from "../components/users/UserMenu";
+import { fetchAllUsers } from "@/services/db";
+import Header from "@/components/layout/Header";
+import Sidebar from "@/components/layout/Sidebar";
+import Pagination from "@/components/layout/Pagination";
+import FilterModal from "@/components/users/FilterModal";
+import UserMenu from "@/components/users/UserMenu";
 
 // Card component for dashboard statistics
 interface StatCardProps {
