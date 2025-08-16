@@ -5,7 +5,6 @@ import type { User } from "../types/user";
 import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 import "../styles/userDetails.scss";
-import avatarImg from "../assets/avatar.png"; // Default avatar
 
 // Local storage functions
 const saveUserLocal = (user: User) => {

@@ -280,9 +280,7 @@ function Dashboard() {
                             <UserMenu
                               isOpen={true}
                               onClose={() => setActiveMenu(null)}
-                              onViewDetails={() => {
-                                /* implement */
-                              }}
+                              userId={user.id}
                               onBlacklist={() => {
                                 /* implement */
                               }}
